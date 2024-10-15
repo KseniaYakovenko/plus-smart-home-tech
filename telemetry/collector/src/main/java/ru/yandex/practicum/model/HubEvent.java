@@ -3,9 +3,7 @@ package ru.yandex.practicum.model;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import java.time.Instant;
 
@@ -20,15 +18,12 @@ import java.time.Instant;
         @JsonSubTypes.Type(value = ScenarioAddedEvent.class, name = "SCENARIO_ADDED"),
         @JsonSubTypes.Type(value = ScenarioRemovedEvent.class, name = "SCENARIO_REMOVED")
 })
-@Getter
-@Setter
-@ToString
+@Data
 public abstract class HubEvent {
     @NotBlank
     private String hubId;
 
     private Instant timestamp = Instant.now();
 
-    // @NotBlank
     public abstract HubEventType getType();
 }

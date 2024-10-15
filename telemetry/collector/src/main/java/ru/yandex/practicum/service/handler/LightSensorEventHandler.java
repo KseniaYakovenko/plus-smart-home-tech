@@ -23,11 +23,10 @@ public class LightSensorEventHandler extends BaseSensorEventHandler<LightSensorA
 
     @Override
     protected LightSensorAvro mapToAvro(SensorEvent event) {
-        LightSensorEvent lightEvent = (LightSensorEvent) event;
-
-        return LightSensorAvro.newBuilder()
-                .setLinkQuality(lightEvent.getLinkQuality())
-                .setLuminosity(lightEvent.getLuminosity())
-                .build();
+        var lightEvent = (LightSensorEvent) event;
+        return new LightSensorAvro(
+                lightEvent.getLinkQuality(),
+                lightEvent.getLuminosity()
+        );
     }
 }

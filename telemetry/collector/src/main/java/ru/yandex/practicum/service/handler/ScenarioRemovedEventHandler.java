@@ -24,10 +24,9 @@ public class ScenarioRemovedEventHandler extends BaseHubEventHandler<ScenarioRem
 
     @Override
     protected ScenarioRemovedEventAvro mapToAvro(HubEvent event) {
-        ScenarioRemovedEvent scenarioRemovedEvent = (ScenarioRemovedEvent) event;
+        var scenarioRemovedEvent = (ScenarioRemovedEvent) event;
 
-        return ScenarioRemovedEventAvro.newBuilder()
-                .setName(scenarioRemovedEvent.getName())
-                .build();
+        return new ScenarioRemovedEventAvro(scenarioRemovedEvent.getName());
+
     }
 }

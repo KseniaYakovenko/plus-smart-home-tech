@@ -14,9 +14,6 @@ public class ScenarioRemovedEvent extends HubEvent {
     @Size(min = 3)
     private String name;
 
-//    maxLength: 2147483647
-//    minLength: 3
-
     @Override
     public HubEventType getType() {
         return HubEventType.SCENARIO_REMOVED;
