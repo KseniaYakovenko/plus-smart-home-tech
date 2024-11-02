@@ -38,22 +38,12 @@ public class KafkaConfig {
         }
     }
 
-    @Getter
-    public static class ProducerConfig {
-        public final Properties properties;
-
-        public ProducerConfig(Properties properties) {
-            this.properties = properties;
-        }
+    //@Getter
+        public record ProducerConfig(Properties properties) {
     }
 
-    @Getter
-    public static class ConsumerConfig {
-        public final Properties properties;
-
-        public ConsumerConfig(Properties properties) {
-            this.properties = properties;
-        }
+    //@Getter
+        public record ConsumerConfig(Properties properties) {
     }
 
     @Getter
