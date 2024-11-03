@@ -1,46 +1,48 @@
 -- создаём таблицу scenarios
 CREATE TABLE IF NOT EXISTS scenarios (
                                          id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-                                         hub_id VARCHAR NOT NULL,
-                                         name VARCHAR NOT NULL,
+                                         hub_id VARCHAR(50) NOT NULL,
+                                         name VARCHAR(50) NOT NULL,
                                          UNIQUE(hub_id, name)
     );
 
 -- создаём таблицу sensors
 CREATE TABLE IF NOT EXISTS sensors (
-                                       id VARCHAR PRIMARY KEY,
-                                       hub_id VARCHAR NOT NULL
+                                       id VARCHAR(50) PRIMARY KEY,
+                                       hub_id VARCHAR(50) NOT NULL
 );
 
 -- создаём таблицу conditions
 CREATE TABLE IF NOT EXISTS conditions (
                                           id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-                                          type VARCHAR NOT NULL,
-                                          operation VARCHAR NOT NULL,
+                                          type VARCHAR(20) NOT NULL,
+                                          operation VARCHAR(20) NOT NULL,
                                           value INTEGER NOT NULL
 );
 
 -- создаём таблицу actions
 CREATE TABLE IF NOT EXISTS actions (
                                        id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-                                       type VARCHAR NOT NULL,
+                                       type VARCHAR(20) NOT NULL,
                                        value INTEGER NOT NULL
 );
 
 -- создаём таблицу scenario_conditions, связывающую сценарий, датчик и условие активации сценария
 CREATE TABLE IF NOT EXISTS scenario_conditions (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     scenario_id BIGINT NOT NULL REFERENCES scenarios(id) ON DELETE CASCADE,
-    sensor_id VARCHAR NOT NULL REFERENCES sensors(id),
+    sensor_id VARCHAR(50) NOT NULL REFERENCES sensors(id),
     condition_id BIGINT NOT NULL REFERENCES conditions(id),
-    PRIMARY KEY (scenario_id, sensor_id, condition_id)
+    UNIQUE (scenario_id, sensor_id, condition_id)
     );
 
 -- создаём таблицу scenario_actions, связывающую сценарий, датчик и действие, которое нужно выполнить при активации сценария
 CREATE TABLE IF NOT EXISTS scenario_actions (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     scenario_id BIGINT NOT NULL REFERENCES scenarios(id) ON DELETE CASCADE,
-    sensor_id VARCHAR NOT NULL REFERENCES sensors(id),
+    sensor_id VARCHAR(50) NOT NULL REFERENCES sensors(id),
     action_id BIGINT NOT NULL REFERENCES actions(id),
-    PRIMARY KEY (scenario_id, sensor_id, action_id)
+    UNIQUE (scenario_id, sensor_id, action_id)
     );
 
 -- создаём функцию для проверки, что связываемые сценарий и датчик работают с одним и тем же хабом
@@ -48,7 +50,7 @@ CREATE OR REPLACE FUNCTION check_hub_id()
 RETURNS TRIGGER AS
 '
 BEGIN
-    IF (SELECT hub_id FROM scenarios WHERE id = NEW.scenario_id) != (SELECT hub_id FROM sensors WHERE id = NEW.sensor_id) THEN
+    IF (SELECT hub_id FROM scenarios WHERE id = NEW.scenario_id) <> (SELECT hub_id FROM sensors WHERE id = NEW.sensor_id) THEN
         RAISE EXCEPTION ''Hub IDs do not match for scenario_id % and sensor_id %'', NEW.scenario_id, NEW.sensor_id;
     END IF;
     RETURN NEW;
