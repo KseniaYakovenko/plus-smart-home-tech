@@ -57,10 +57,10 @@ public class ScenarioService {
     private Integer convertToInteger(Object value) {
         if (value instanceof Integer) {
             return (Integer) value;
-        } else if (value instanceof Boolean) {
-            return (Boolean) value ? 1 : 0;
-        } else {
-            return null;
         }
+        if (value instanceof Boolean) {
+            return (Boolean) value ? 1 : 0;
+        }
+        return null;
     }
 }
