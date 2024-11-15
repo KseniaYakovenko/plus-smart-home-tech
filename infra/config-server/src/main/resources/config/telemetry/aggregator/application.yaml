@@ -1,7 +1,3 @@
-spring:
-  application:
-    name: aggregator
-
 logging:
   level:
     ru.yandex.practicum: TRACE
@@ -28,6 +24,6 @@ aggregator:
         "group.id": "aggregator-consumer-group"
         "auto-offset-reset": earliest
         "key.deserializer": org.apache.kafka.common.serialization.StringDeserializer
-#      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+        #      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
         "value.deserializer": ru.yandex.practicum.kafka.SensorEventDeserializer
         bootstrap.servers": localhost:9092
