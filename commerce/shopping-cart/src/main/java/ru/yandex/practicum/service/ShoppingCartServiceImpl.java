@@ -165,11 +165,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private ShoppingCart createNewShoppingCart(String username) {
         log.info("createNewShoppingCart user: {}", username);
-        ShoppingCart cart = ShoppingCart.builder()
-                .username(username)
-                .active(true)
-                .products(new HashMap<>())
-                .build();
+        ShoppingCart cart = new ShoppingCart();
+        cart.setUsername(username);
+        cart.setActive(true);
+        cart.setProducts(new HashMap<>());
         return shoppingCartRepository.save(cart);
     }
 
