@@ -1,4 +1,4 @@
-package wirehouse.dto;
+package warehouse.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

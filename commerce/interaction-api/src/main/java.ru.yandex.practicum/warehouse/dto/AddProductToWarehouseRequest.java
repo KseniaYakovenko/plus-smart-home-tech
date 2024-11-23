@@ -1,4 +1,4 @@
-package wirehouse.dto;
+package warehouse.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
