@@ -4,9 +4,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.service.ShoppingCartService;
-import shoppingCart.dto.ChangeProductQuantityRequest;
-import shoppingCart.dto.ShoppingCartDto;
-import warehouse.dto.BookedProductsDto;
+import ru.yandex.practicum.shoppingCart.dto.ChangeProductQuantityRequest;
+import ru.yandex.practicum.shoppingCart.dto.ShoppingCartDto;
+import ru.yandex.practicum.warehouse.dto.BookedProductsDto;
 
 import java.util.Map;
 import java.util.UUID;

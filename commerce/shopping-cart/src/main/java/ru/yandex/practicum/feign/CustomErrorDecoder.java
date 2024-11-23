@@ -18,12 +18,12 @@ public class CustomErrorDecoder implements ErrorDecoder {
     @Override
     public Exception decode(String methodKey, Response response) {
         HttpStatus httpStatus = HttpStatus.resolve(response.status());
-        log.error("Ошибка Feign: метод {}, статус {}, причина {}", methodKey, response.status(), response.reason());
+        log.error("Feign error: method {}, status {}, cause {}", methodKey, response.status(), response.reason());
 
         assert httpStatus != null;
         return switch (httpStatus) {
-            case BAD_REQUEST -> new BadRequestException("Некорректный запрос");
-            case INTERNAL_SERVER_ERROR -> new InternalServerErrorException("Внутренняя ошибка сервера");
+            case BAD_REQUEST -> new BadRequestException("Bad Request");
+            case INTERNAL_SERVER_ERROR -> new InternalServerErrorException("Internal Server Error");
             default -> defaultErrorDecoder.decode(methodKey, response);
         };
     }

@@ -1,16 +1,11 @@
-DROP TABLE IF EXISTS shopping_carts CASCADE;
-DROP TABLE IF EXISTS shopping_cart_items CASCADE;
-
-//CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
-CREATE TABLE shopping_carts
+CREATE TABLE IF NOT EXISTS shopping_carts
 (
-    shopping_cart_id UUID PRIMARY KEY      DEFAULT gen_random_uuid (),
+    shopping_cart_id UUID PRIMARY KEY      DEFAULT gen_random_uuid(),
     username         VARCHAR(255) NOT NULL,
     active           BOOLEAN      NOT NULL DEFAULT TRUE
 );
 
-CREATE TABLE shopping_cart_items
+CREATE TABLE IF NOT EXISTS shopping_cart_items
 (
     shopping_cart_id UUID    NOT NULL,
     product_id       UUID    NOT NULL,
