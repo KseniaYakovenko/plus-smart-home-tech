@@ -23,6 +23,8 @@ import ru.yandex.practicum.warehouse.dto.*;
 import java.util.Map;
 import java.util.UUID;
 
+import static ru.yandex.practicum.warehouse.dto.AddressDto.getDefaultAddress;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -157,18 +159,19 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public AddressDto getWarehouseAddress() {
-        return new AddressDto("Country", "City", "Street", "1", "2");
+        return getDefaultAddress();
     }
 
     private QuantityState determineState(int quantity) {
         if (quantity == 0) {
             return QuantityState.ENDED;
-        } else if (quantity > 0 && quantity < LIMIT_COUNT) {
-            return QuantityState.FEW;
-        } else if (quantity >= LIMIT_COUNT && quantity <= ENOUGH_COUNT) {
-            return QuantityState.ENOUGH;
-        } else {
-            return QuantityState.MANY;
         }
+        if (quantity > 0 && quantity < LIMIT_COUNT) {
+            return QuantityState.FEW;
+        }
+        if (quantity >= LIMIT_COUNT && quantity <= ENOUGH_COUNT) {
+            return QuantityState.ENOUGH;
+        }
+        return QuantityState.MANY;
     }
 }
