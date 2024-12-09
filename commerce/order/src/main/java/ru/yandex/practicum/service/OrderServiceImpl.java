@@ -43,6 +43,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<OrderDto> getClientOrders(String username) {
         if (username == null || username.isEmpty()) {
             throw new NotAuthorizedUserException("Имя пользователя не должно быть пустым");

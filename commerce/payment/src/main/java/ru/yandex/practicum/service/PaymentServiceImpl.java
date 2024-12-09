@@ -30,6 +30,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final OrderClient orderClient;
 
     @Override
+    @Transactional(readOnly = true)
     public BigDecimal productCost(OrderDto orderDto) {
 
         BigDecimal total = BigDecimal.ZERO;
@@ -49,6 +50,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public BigDecimal getTotalCost(OrderDto orderDto) {
         BigDecimal productTotal = productCost(orderDto);
         BigDecimal deliveryPrice = orderDto.getDeliveryPrice();

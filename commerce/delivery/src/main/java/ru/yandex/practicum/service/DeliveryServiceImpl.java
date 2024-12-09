@@ -45,6 +45,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public void deliverySuccessful(UUID orderId) {
         Delivery delivery = deliveryRepository.findByOrderId(orderId)
                 .orElseThrow(() -> new NoOrderFoundException("Не найден заказ: " + orderId));
@@ -56,7 +57,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public void deliveryPicked(UUID deliveryId) {
         log.info("Получение товара для доставки: {}", deliveryId);
 
@@ -75,7 +76,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public void deliveryFailed(UUID orderId) {
         log.info("delivery failed for orderId: {}", orderId);
 
