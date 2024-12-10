@@ -13,6 +13,7 @@ spring:
           uri: lb://shopping-store
           predicates:
             - Path=/shopping-store/**
+
           filters:
             - PrefixPath=/api/v1
             - name: Retry
